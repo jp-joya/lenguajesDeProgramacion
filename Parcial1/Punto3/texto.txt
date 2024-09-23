@@ -1,0 +1,9 @@
+Este es un ejemplo de archivo de texto.
+En este archivo, buscamos una palabra clave.
+La palabra clave puede aparecer varias veces.
+La palabra clave también puede estar en medio de la línea.
+¿Encontramos la palabra clave?
+hola hola
+hola
+hola
+
