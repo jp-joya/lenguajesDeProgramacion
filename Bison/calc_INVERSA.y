@@ -14,8 +14,8 @@ int yylex(void);
 %token <val> NUMBER
 %token ADD SUB MUL DIV EXP ABS OP CP EOL
 
-%left ADD SUB
 %left MUL DIV
+%left ADD SUB
 %left EXP
 %left ABS
 %right UMINUS

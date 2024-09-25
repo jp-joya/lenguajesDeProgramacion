@@ -76,8 +76,7 @@
 void yyerror(const char *s);
 int yylex(void);
 
-
-#line 81 "calc.tab.c"
+#line 80 "calc.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -509,8 +508,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    28,    28,    30,    34,    35,    39,    40,    41,    42,
-      43,    51,    52,    53,    54
+       0,    27,    27,    29,    33,    34,    38,    39,    40,    41,
+      42,    51,    52,    53,    54
 };
 #endif
 
@@ -1084,43 +1083,44 @@ yyreduce:
   switch (yyn)
     {
   case 4: /* linea: expr EOL  */
-#line 34 "calc.y"
-                { printf("Resultado: %.2f\n", (yyvsp[-1].val)); }
-#line 1090 "calc.tab.c"
+#line 33 "calc.y"
+                { printf("Resultado final: %.2f\n", (yyvsp[-1].val)); }
+#line 1089 "calc.tab.c"
     break;
 
   case 6: /* expr: NUMBER  */
-#line 39 "calc.y"
-                    { (yyval.val) = (yyvsp[0].val); }
-#line 1096 "calc.tab.c"
+#line 38 "calc.y"
+                    { (yyval.val) = (yyvsp[0].val);}
+#line 1095 "calc.tab.c"
     break;
 
   case 7: /* expr: expr ADD expr  */
-#line 40 "calc.y"
-                    { (yyval.val) = (yyvsp[-2].val) + (yyvsp[0].val); }
-#line 1102 "calc.tab.c"
+#line 39 "calc.y"
+                    { (yyval.val) = (yyvsp[-2].val) + (yyvsp[0].val); printf("Sumando: %.2f + %.2f = %.2f\n", (yyvsp[-2].val), (yyvsp[0].val), (yyval.val)); }
+#line 1101 "calc.tab.c"
     break;
 
   case 8: /* expr: expr SUB expr  */
-#line 41 "calc.y"
-                    { (yyval.val) = (yyvsp[-2].val) - (yyvsp[0].val); }
-#line 1108 "calc.tab.c"
+#line 40 "calc.y"
+                    { (yyval.val) = (yyvsp[-2].val) - (yyvsp[0].val); printf("Restando: %.2f - %.2f = %.2f\n", (yyvsp[-2].val), (yyvsp[0].val), (yyval.val)); }
+#line 1107 "calc.tab.c"
     break;
 
   case 9: /* expr: expr MUL expr  */
-#line 42 "calc.y"
-                    { (yyval.val) = (yyvsp[-2].val) * (yyvsp[0].val); }
-#line 1114 "calc.tab.c"
+#line 41 "calc.y"
+                    { (yyval.val) = (yyvsp[-2].val) * (yyvsp[0].val); printf("Multiplicando: %.2f * %.2f = %.2f\n", (yyvsp[-2].val), (yyvsp[0].val), (yyval.val)); }
+#line 1113 "calc.tab.c"
     break;
 
   case 10: /* expr: expr DIV expr  */
-#line 43 "calc.y"
+#line 42 "calc.y"
                     {
         if ((yyvsp[0].val) == 0) {
             yyerror("Error: División por cero");
-            (yyval.val) = 0;  // or handle this case as needed
+            (yyval.val) = 0;  // o maneja este caso como sea necesario
         } else {
             (yyval.val) = (yyvsp[-2].val) / (yyvsp[0].val);
+            printf("Dividiendo: %.2f / %.2f = %.2f\n", (yyvsp[-2].val), (yyvsp[0].val), (yyval.val));
         }
     }
 #line 1127 "calc.tab.c"
@@ -1128,25 +1128,25 @@ yyreduce:
 
   case 11: /* expr: expr EXP expr  */
 #line 51 "calc.y"
-                    { (yyval.val) = pow((yyvsp[-2].val), (yyvsp[0].val)); }
+                    { (yyval.val) = pow((yyvsp[-2].val), (yyvsp[0].val)); printf("Exponentiando: %.2f ^ %.2f = %.2f\n", (yyvsp[-2].val), (yyvsp[0].val), (yyval.val)); }
 #line 1133 "calc.tab.c"
     break;
 
   case 12: /* expr: SUB expr  */
 #line 52 "calc.y"
-                            { (yyval.val) = -(yyvsp[0].val); }
+                            { (yyval.val) = -(yyvsp[0].val); printf("Negando: -%.2f = %.2f\n", (yyvsp[0].val), (yyval.val)); }
 #line 1139 "calc.tab.c"
     break;
 
   case 13: /* expr: OP expr CP  */
 #line 53 "calc.y"
-                    { (yyval.val) = (yyvsp[-1].val); }
+                    { (yyval.val) = (yyvsp[-1].val); printf("Paréntesis: (%.2f) = %.2f\n", (yyvsp[-1].val), (yyval.val)); }
 #line 1145 "calc.tab.c"
     break;
 
   case 14: /* expr: ABS expr ABS  */
 #line 54 "calc.y"
-                    { (yyval.val) = fabs((yyvsp[-1].val)); }
+                    { (yyval.val) = fabs((yyvsp[-1].val)); printf("Valor absoluto: |%.2f| = %.2f\n", (yyvsp[-1].val), (yyval.val)); }
 #line 1151 "calc.tab.c"
     break;
 
@@ -1345,7 +1345,7 @@ yyreturnlab:
 }
 
 #line 57 "calc.y"
-
+ 
 
 void yyerror(const char *s) {
     fprintf(stderr, "%s\n", s);

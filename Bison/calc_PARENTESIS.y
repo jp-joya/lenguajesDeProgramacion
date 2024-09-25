@@ -35,7 +35,7 @@ linea:
     ;
 
 expr:
-    NUMBER          { $$ = $1;}
+    NUMBER          { $$ = $1; }
     | expr ADD expr { $$ = $1 + $3; printf("Sumando: %.2f + %.2f = %.2f\n", $1, $3, $$); }
     | expr SUB expr { $$ = $1 - $3; printf("Restando: %.2f - %.2f = %.2f\n", $1, $3, $$); }
     | expr MUL expr { $$ = $1 * $3; printf("Multiplicando: %.2f * %.2f = %.2f\n", $1, $3, $$); }
@@ -52,6 +52,19 @@ expr:
     | SUB expr %prec UMINUS { $$ = -$2; printf("Negando: -%.2f = %.2f\n", $2, $$); }
     | OP expr CP    { $$ = $2; printf("Paréntesis: (%.2f) = %.2f\n", $2, $$); }
     | ABS expr ABS  { $$ = fabs($2); printf("Valor absoluto: |%.2f| = %.2f\n", $2, $$); }
+    | OP expr CP ADD expr { $$ = $2 + $4; printf("Paréntesis y suma: (%.2f) + %.2f = %.2f\n", $2, $4, $$); }
+    | OP expr CP SUB expr { $$ = $2 - $4; printf("Paréntesis y resta: (%.2f) - %.2f = %.2f\n", $2, $4, $$); }
+    | OP expr CP MUL expr { $$ = $2 * $4; printf("Paréntesis y multiplicación: (%.2f) * %.2f = %.2f\n", $2, $4, $$); }
+    | OP expr CP DIV expr { 
+        if ($4 == 0) {
+            yyerror("Error: División por cero");
+            $$ = 0;
+        } else {
+            $$ = $2 / $4; 
+            printf("Paréntesis y división: (%.2f) / %.2f = %.2f\n", $2, $4, $$);
+        }
+    }
+    | OP expr CP EXP expr { $$ = pow($2, $4); printf("Paréntesis y exponentiación: (%.2f) ^ %.2f = %.2f\n", $2, $4, $$); }
     ;
 
 %% 
